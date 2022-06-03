@@ -26,6 +26,7 @@ function Todo() {
     { key: getKey(), text: '明日の準備をする', done: false },
     /* テストコード 終了 */
   ]);
+
   
   const handleClick = (e) => {
     e.target.classList.toggle('has-text-grey-light')
@@ -36,6 +37,7 @@ function Todo() {
       <div className="panel-heading">
         ITSS ToDoアプリ
       </div>
+      <Input putItems={putItems} />
       {items.map(item => (
         <TodoItem
           handleClick={e => handleClick(e)}
