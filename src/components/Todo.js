@@ -27,10 +27,25 @@ function Todo() {
     /* テストコード 終了 */
   ]);
 
+  const [filter, setFilter] = React.useState('ALL');
+
+  const displayItems = items.filter(item => {
+    if (filter === 'ALL') return true;
+    if (filter === 'TODO') return !item.done;
+    if (filter === 'DONE') return item.done;
+  });
   
-  const handleClick = (e) => {
-    e.target.classList.toggle('has-text-grey-light')
-  }
+  const handleFilterChange = value => setFilter(value);
+
+  const handleCheck = checked => {
+    const newItems = items.map(item => {
+      if (item.key === checked.key) {
+        item.done = !item.done;
+      }
+      return item;
+    });
+    putItems(newItems);
+  };
   
   return (
     <div className="panel">
@@ -38,9 +53,13 @@ function Todo() {
         ITSS ToDoアプリ
       </div>
       <Input putItems={putItems} />
-      {items.map(item => (
+      <Filter
+        onChange={handleFilterChange}
+        value={filter}
+      />
+      {displayItems.map(item => (
         <TodoItem
-          handleClick={e => handleClick(e)}
+          onClick={handleCheck}
           key={item.key}
           item={item}
         />
