@@ -5,39 +5,25 @@ import {getKey} from "../lib/util";
 　・新しいTodoを作成するINPUTフィールドを作成するコンポーネント
 　・Enterをクリックされたら入力された文字を使って新しいTodoを作成する
 */
-function Input({putItems}) {
-  const [value, setValue] = useState('');
-
-  const handleInput = (e) => {
-    setValue((prevState) => {
-      prevState = e.target.value;
-      return prevState;
-    })
-  }
-
-  const hanleKeyDown = (e) => {
-    if (e.key === 'Enter'){
-      if(value == '') return;
-      putItems((prevState) => {
-        prevState = [...prevState, { key: getKey(), text: value, done: false }];
-        return prevState;
-      })
-
-      setValue((prevState) => {
-        prevState = '';
-        return prevState;
-      })
+function Input( { onAdd } ) {
+  const [text, setText] = React.useState('');
+  const handleChange = e => setText(e.target.value);
+  const handleKeyDown = e => {
+    if (e.keyCode === 13) {
+      onAdd(text);
+      setText('');
     }
-  }
+  };
   
   return (
     <div className="panel-block">
       <input
-        placeholder="Todoを入力してください"
-        value={value} 
-        type="text" 
-        onKeyDown={e => hanleKeyDown(e)} 
-        onInput={e => handleInput(e)} 
+        className="input"
+        type="text"
+        placeholder="Todo を 入力してください"
+        value={text}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
       />
     </div>
   );

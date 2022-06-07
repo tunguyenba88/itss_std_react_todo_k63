@@ -17,10 +17,13 @@ function useStorage() {
   /* 副作用を使う */
   useEffect(() => {
     const data = localStorage.getItem(STORAGE_KEY);
+    console.log(data)
     if (!data) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
     } else {
-      setItems(JSON.parse(data));
+      if(data !== 'undefined'){
+        setItems(JSON.parse(data));
+      }
     }
   }, []);
 

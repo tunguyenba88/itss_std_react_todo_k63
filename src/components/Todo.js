@@ -50,12 +50,16 @@ function Todo() {
     putItems(newItems);
   };
 
+  const handleAdd = text => {
+    putItems([...items, { key: getKey(), text, done: false }]);
+  };
+
   return (
     <div className="panel">
       <div className="panel-heading">
         ITSS ToDoアプリ
       </div>
-      <Input putItems={putItems} />
+      <Input onAdd={handleAdd} />
       <Filter
         onChange={handleFilterChange}
         value={filter}
